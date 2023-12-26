@@ -6,6 +6,11 @@ const sequelize = require(path.join(
     "/src/config/lib/sequelize.js"
 ));
 
+const UserSearch = require(path.join(
+    process.cwd(),
+    "/src/modules/platform/search/search.model"
+));
+
 const Match = sequelize.define("Match", {
     id: {
         allowNull: false,
@@ -25,6 +30,13 @@ const Match = sequelize.define("Match", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    userSearchId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+    },
 });
+
+// Define the association
+Match.belongsTo(UserSearch, { foreignKey: "userSearchId" });
 
 module.exports = Match;

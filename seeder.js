@@ -12,21 +12,19 @@ async function init() {
         "/src/config/lib/sequelize.js"
     ));
 
-    const logger = config.getLogger("Seeder"); // getLogger is part of my configuration
+    const UserSearch = require(path.join(
+        process.cwd(),
+        "/src/modules/platform/search/search.model"
+    ));
+    const Match = require(path.join(
+        process.cwd(),
+        "/src/modules/platform/search/match.model"
+    ));
+
+    const logger = config.getLogger("Seeder");
 
     try {
-        await sequelize.query("CREATE DATABASE IF NOT EXISTS sharetrip;");
-        logger.info("Database created successfully.");
-
-        const UserSearch = require(path.join(
-            process.cwd(),
-            "/src/modules/platform/search/search.model"
-        ));
-        const Match = require(path.join(
-            process.cwd(),
-            "/src/modules/platform/search/match.model"
-        ));
-
+        // Create tables if they don't exist
         await sequelize.sync();
 
         // Clear existing data
@@ -40,7 +38,9 @@ async function init() {
         logger.info("Fetched external API data.");
 
         // Seed initial data
-        const userSearch = await UserSearch.create({ keyword: "ratione" });
+        const userSearch = await UserSearch.create({
+            keyword: "ratione",
+        });
         logger.info("Seeded initial data.");
 
         const matchingPosts = posts.filter(
@@ -54,6 +54,7 @@ async function init() {
                 postId: post.id,
                 userId: post.userId,
                 keyword: userSearch.keyword,
+                userSearchId: userSearch.id, // Set the association
             })
         );
 
