@@ -28,10 +28,6 @@ const search = async (req, res) => {
 
         // Save user search
         const userSearch = await UserSearch.create({ keyword });
-        console.log(
-            "----------------------------------------------------",
-            userSearch.dataValues.id
-        );
 
         // Save matches
         const matchPromises = matchingPosts.map(async (post) => {
@@ -46,6 +42,7 @@ const search = async (req, res) => {
 
         await Promise.all(matchPromises);
 
+        logger.info("Saved user search & matching results");
         res.json(matchingPosts);
     } catch (error) {
         logger.error("Error during search:", error);

@@ -7,7 +7,7 @@ const DB_HOST = nodeCache.getValue("DB_HOST");
 const DB_USER = nodeCache.getValue("DB_USER");
 const DB_PASSWORD = nodeCache.getValue("DB_PASSWORD");
 
-const sequelize = new Sequelize(DB_NAME, DB_USER, "", {
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
     host: DB_HOST,
     dialect: "mysql",
     logging: false,
