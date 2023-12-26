@@ -2,7 +2,9 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
 
+const swagger = require("./swagger");
 const config = require(path.join(process.cwd(), "src/config/index.js"));
 const nodeCache = require(path.join(process.cwd(), "src/config/lib/nodecache"));
 
@@ -19,8 +21,6 @@ module.exports = () => {
         credentials: true,
         origin: (origin, callback) => {
             return callback(null, true);
-
-            callback(new Error("Not allowed by CORS"));
         },
     };
     app.use(cors(corsOptions));
@@ -36,6 +36,12 @@ module.exports = () => {
     globalConfig.strategies.forEach((strategyPath) => {
         require(path.resolve(strategyPath))();
     });
+
+    app.use(
+        "/api-docs",
+        swaggerUi.serve,
+        swaggerUi.setup(swagger.specs, swagger.uiOptions)
+    );
 
     return app;
 };
