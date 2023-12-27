@@ -30,6 +30,14 @@ const Match = sequelize.define("Match", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    body: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     userSearchId: {
         type: DataTypes.UUID,
         allowNull: false,

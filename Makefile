@@ -9,7 +9,7 @@ serve:
 		docker system prune && docker-compose up --build; \
 	elif [ $$choice -eq 2 ]; then \
 		echo "$(shell tput setaf 6)Running Locally...$(shell tput sgr0)"; \
-		node seeder && npm start; \
+		npm i && node seeder && npm start; \
 	else \
 		echo "$(shell tput setaf 1)Invalid choice! Exiting...$(shell tput sgr0)"; \
 	fi

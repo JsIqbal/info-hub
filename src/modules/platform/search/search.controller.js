@@ -34,6 +34,8 @@ const search = async (req, res) => {
             const match = await Match.create({
                 postId: post.id,
                 userId: post.userId,
+                title: post.title,
+                body: post.body,
                 keyword,
                 userSearchId: userSearch.dataValues.id, // Set the association
             });
