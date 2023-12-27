@@ -26,6 +26,7 @@ services:
         volumes:
             - .:/app
             - /app/node_modules
+        command: sh -c "sleep 30 && node seeder && npm start"
 
 volumes:
     db:
