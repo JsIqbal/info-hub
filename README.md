@@ -11,6 +11,7 @@ This project is a backend REST API designed to handle keyword searches on an ext
 -   [Database Schema](#database-schema)
 -   [Example](#example)
 -   [Submission](#submission)
+-   [Swagger Documentation](#swagger-documentation)
 
 ## Introduction
 
@@ -32,12 +33,12 @@ The ShareTrip Backend API is a Node.js application built to handle user requests
 
 -   Node.js
 -   Express.js
--   MySQL (or any other database of choice)
+-   MySQL (database of choice)
+-   Sequelize (A promise-based Node.js ORM)
 -   Winston (for logging)
 -   Swagger (for API documentation)
 -   Docker (for containerization)
--   Kubernetes (for orchestration)
--   Skaffold (for Kubernetes development)
+-   Docker Compose(running multi-container Docker applications)
 
 ## Setup
 
@@ -47,35 +48,28 @@ The ShareTrip Backend API is a Node.js application built to handle user requests
 git clone <repository_url>
 ```
 
-2. Install dependencies
+2. Set up the environment variables:
 
-```bash
-npm install
-```
+-   Know this: Environment variables values differ as per the configuration of the software.
 
-3. Set up the environment variables:
-
-```env
+```.env
 PORT=3000
 DB_NAME=<database_name>
 DB_HOST=<database_host>
 DB_USER=<database_user>
-DB_PASSWORD=
+DB_PASSWORD=<can be "" or password>
 EXTERNAL_API=<your_external_api>
 
 ```
 
-4. Seed the Database:
+3. Run in Terminal:
 
 ```bash
-node seeder
+make serve
 ```
 
-5. Run the Application:
-
-```bash
-npm start
-```
+-   you will see a choosing option.
+-   Either you can select 1 to run the project using docker or you can choose 2 to locally run the project. Instructions are given on the terminal.
 
 ## Usage
 
@@ -130,3 +124,13 @@ http://localhost:3000/search?keyword=ratione
 ```
 
 -   Matching posts with the keyword "mango" (id 97, 98) are stored in the database, and the API returns these blog posts as the response.
+
+## Swagger Documentation
+
+-   Swagger documentation for the API is available at:
+
+```link
+http://localhost:3000/api-docs
+```
+
+Explore the API endpoints and test requests using Swagger.
