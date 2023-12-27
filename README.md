@@ -10,8 +10,8 @@ This project is a backend REST API designed to handle keyword searches on an ext
 -   [Usage](#usage)
 -   [Database Schema](#database-schema)
 -   [Example](#example)
--   [Submission](#submission)
 -   [Swagger Documentation](#swagger-documentation)
+-   [Testing](#testing)
 
 ## Introduction
 
@@ -39,13 +39,14 @@ The ShareTrip Backend API is a Node.js application built to handle user requests
 -   Swagger (for API documentation)
 -   Docker (for containerization)
 -   Docker Compose(running multi-container Docker applications)
+-   Jest (test runner)
 
 ## Setup
 
 1. Clone the repository:
 
 ```bash
-git clone <repository_url>
+git clone https://github.com/JsIqbal/info-hub.git
 ```
 
 2. Set up the environment variables:
@@ -134,3 +135,16 @@ http://localhost:3000/api-docs
 ```
 
 Explore the API endpoints and test requests using Swagger.
+
+## Testing
+
+-   The ShareTrip Backend API comes with a robust testing suite to ensure the reliability and correctness of its functionality. The tests cover a basic integration focusing on individual components and their interactions. You can run the tests locally to verify that the application is configured correctly.
+
+*   Running a Simple Test
+    To run a simple test and check if the application is configured properly, execute the following command in the project directory:
+
+```bash
+npm test
+```
+
+-   This command will trigger the Jest test runner, executing basic tests to ensure that the application starts without errors. It's a quick way to verify the initial configuration of the project.
