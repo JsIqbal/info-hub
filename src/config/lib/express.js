@@ -25,7 +25,7 @@ module.exports = () => {
     };
     app.use(cors(corsOptions));
 
-    app.set("port", nodeCache.getValue("PORT"));
+    app.set("port", nodeCache.getValue("PORT") || 3000);
 
     const globalConfig = config.getGlobalConfig();
 
