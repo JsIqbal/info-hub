@@ -9,16 +9,16 @@ async function init() {
 
     const sequelize = require(path.join(
         process.cwd(),
-        "/src/config/lib/sequelize.js"
+        "src/config/lib/sequelize.js"
     ));
 
     const UserSearch = require(path.join(
         process.cwd(),
-        "/src/modules/platform/search/search.model"
+        "src/modules/platform/search/search.model"
     ));
     const Match = require(path.join(
         process.cwd(),
-        "/src/modules/platform/search/match.model"
+        "src/modules/platform/search/match.model"
     ));
 
     const logger = config.getLogger("Seeder");
@@ -39,7 +39,7 @@ async function init() {
 
         // Seed initial data
         const userSearch = await UserSearch.create({
-            keyword: "ratione",
+            keyword: "mango",
         });
         logger.info("Seeded initial data.");
 

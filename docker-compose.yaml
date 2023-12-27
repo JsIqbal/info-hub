@@ -1,18 +1,32 @@
-version: "3.3"
+version: "3.8"
 
 services:
     db:
         container_name: info_db
         image: mysql
         restart: unless-stopped
-
         environment:
-            - MYSQL_DATABASE=${DB_NAME}
-            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB_NAME}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
         ports:
-            - 3030:3306
+            - "3306:3306"
         volumes:
             - db:/var/lib/mysql
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "mysqladmin",
+                    "ping",
+                    "-h",
+                    "localhost",
+                    "-u",
+                    "root",
+                    "-p${DB_PASSWORD}",
+                ]
+            interval: 5s
+            timeout: 3s
+            retries: 3
 
     app:
         container_name: info_app
@@ -20,12 +34,19 @@ services:
             dockerfile: Dockerfile
             context: .
         depends_on:
-            - db
-        env_file: ./.env
+            db:
+                condition: service_healthy
+        env_file: .env
         ports:
-            - ${PORT}:${PORT}
+            - "${PORT}:${PORT}"
         volumes:
-            - ./:/app
+            - .:/app
+            - /app/node_modules
+        healthcheck:
+            test: ["CMD", "node", "seeder"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
 
 volumes:
     db:

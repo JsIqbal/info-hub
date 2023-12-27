@@ -4,6 +4,6 @@
 
     await config.initEnvironmentVariables();
 
-    const app = require("./src/config/lib/app");
+    const app = require(path.join(process.cwd(), "src/config/lib/app"));
     app.start();
 })();
