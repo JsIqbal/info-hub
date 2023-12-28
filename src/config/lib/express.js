@@ -33,7 +33,7 @@ module.exports = () => {
         require(path.resolve(routePath))(app);
     });
 
-    // strategies are to be implemented after
+    // strategies are to be implemented if required
     globalConfig.strategies.forEach((strategyPath) => {
         require(path.resolve(strategyPath))();
     });
