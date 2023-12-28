@@ -160,7 +160,7 @@ npm test
 ### Running Artillery/load test:
 
 ```bash
-npm test:load
+npm run test:load
 ```
 
 -   This command will trigger the Artillery test runner, executing basic load tests to ensure that the application can handle concurrent users and traffic efficiently.

@@ -7,7 +7,7 @@
         "start": "nodemon --legacy-watch server.js",
         "seed": "node seeder.js",
         "test": "jest",
-        "test:load": "cd src && cd tests && cd artillery && artillery run load-test.yaml"
+        "test:load": "cd tests && cd artillery && artillery run load-test.yaml"
     },
     "keywords": [],
     "author": "",
