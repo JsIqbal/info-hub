@@ -5,7 +5,7 @@ const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 
 const swagger = require("./swagger");
-const config = require(path.join(process.cwd(), "src/config/index.js"));
+const config = require(path.join(process.cwd(), "src/config"));
 const nodeCache = require(path.join(process.cwd(), "src/config/lib/nodecache"));
 
 module.exports = () => {

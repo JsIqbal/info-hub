@@ -2,10 +2,7 @@ const axios = require("axios");
 const path = require("path");
 
 const { getLogger } = require(path.join(process.cwd(), "src/config"));
-const sequelize = require(path.join(
-    process.cwd(),
-    "src/config/lib/sequelize.js"
-));
+const sequelize = require(path.join(process.cwd(), "src/config/lib/sequelize"));
 const UserSearch = require(path.join(
     process.cwd(),
     "src/modules/platform/search/search.model"

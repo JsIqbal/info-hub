@@ -9,7 +9,7 @@ async function init() {
 
     const sequelize = require(path.join(
         process.cwd(),
-        "src/config/lib/sequelize.js"
+        "src/config/lib/sequelize"
     ));
 
     const UserSearch = require(path.join(
