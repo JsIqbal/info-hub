@@ -21,14 +21,16 @@ paths:
                     content:
                         application/json:
                             example:
-                                - userId: 1
-                                  id: 1
-                                  title: "Post 1"
-                                  body: "This is the body of post 1"
-                                - userId: 2
-                                  id: 2
-                                  title: "Post 2"
-                                  body: "This is the body of post 2"
+                                keyword: "example"
+                                matching_posts:
+                                    - userId: 1
+                                      id: 1
+                                      title: "Post 1"
+                                      body: "This is the body of post 1"
+                                    - userId: 2
+                                      id: 2
+                                      title: "Post 2"
+                                      body: "This is the body of post 2"
                 "500":
                     description: Internal Server Error
                     content:

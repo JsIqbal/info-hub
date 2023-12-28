@@ -1,0 +1,14 @@
+config:
+    target: "http://localhost:3000"
+    phases:
+        - duration: 30
+          arrivalRate: 5
+          name: "Warm-up Phase"
+
+scenarios:
+    - name: "Health Check Scenario"
+      flow:
+          - get:
+                url: "/api/health-check"
+                expect:
+                    - statusCode: 200

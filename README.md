@@ -12,6 +12,7 @@ This project is a backend REST API designed to handle keyword searches on an ext
 -   [Example](#example)
 -   [Swagger Documentation](#swagger-documentation)
 -   [Testing](#testing)
+-   [Conclusion](#conclusion)
 
 ## Introduction
 
@@ -40,6 +41,7 @@ The ShareTrip Backend API is a Node.js application built to handle user requests
 -   Docker (for containerization)
 -   Docker Compose(running multi-container Docker applications)
 -   Jest (test runner)
+-   Artillery (test runner)
 
 ## Setup
 
@@ -74,7 +76,7 @@ make serve
 
 ## Usage
 
-1. Make a GET request to the search endpoint:
+-   Make a GET request to the search endpoint:
 
 ```link
 http://localhost:3000/search?keyword=ratione
@@ -138,13 +140,31 @@ Explore the API endpoints and test requests using Swagger.
 
 ## Testing
 
--   The ShareTrip Backend API comes with a robust testing suite to ensure the reliability and correctness of its functionality. The tests cover a basic integration focusing on individual components and their interactions. You can run the tests locally to verify that the application is configured correctly.
+-   The ShareTrip Backend API comes with a robust testing suite to ensure the reliability and correctness of its functionality.
 
-*   Running a Simple Test
-    To run a simple test and check if the application is configured properly, execute the following command in the project directory:
+    -   The tests covers:
+        -   Integration test
+        -   Unit test
+        -   Artillery test
+
+### Running Integration & Unit tests:
 
 ```bash
 npm test
 ```
 
 -   This command will trigger the Jest test runner, executing basic tests to ensure that the application starts without errors. It's a quick way to verify the initial configuration of the project.
+
+---
+
+### Running Artillery/load test:
+
+```bash
+npm test:load
+```
+
+-   This command will trigger the Artillery test runner, executing basic load tests to ensure that the application can handle concurrent users and traffic efficiently.
+
+## Conclusion
+
+The ShareTrip Backend API is a robust Node.js application, efficiently managing keyword searches and database operations. Leveraging technologies like Express.js, Sequelize, and Docker, it ensures scalability and reliability. The well-documented README provides clear setup instructions, Swagger documentation, and comprehensive testing with Jest and Artillery.

@@ -70,12 +70,18 @@ const search = async (req, res) => {
             `Saved user search & matching results for keyword: ${keyword}`
         );
 
-        res.json(matchingPosts);
+        res.json({
+            keyword,
+            matching_posts: matchingPosts,
+        });
     } catch (error) {
         logger.error(`Error during search for keyword: ${keyword}`);
 
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({
+            error: "Internal Server Error",
+        });
     }
 };
 
 module.exports.search = search;
+module.exports.searchExternalAPI = searchExternalAPI;

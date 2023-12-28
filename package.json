@@ -6,7 +6,8 @@
     "scripts": {
         "start": "nodemon --legacy-watch server.js",
         "seed": "node seeder.js",
-        "test": "jest"
+        "test": "jest",
+        "test:load": "cd src && cd tests && cd artillery && artillery run load-test.yaml"
     },
     "keywords": [],
     "author": "",
@@ -30,7 +31,9 @@
         "yup": "^0.32.11"
     },
     "devDependencies": {
+        "artillery": "^2.0.3",
         "jest": "^29.7.0",
+        "k6": "^0.0.0",
         "supertest": "^6.3.3"
     }
 }
