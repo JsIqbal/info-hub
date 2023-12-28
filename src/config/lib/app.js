@@ -11,7 +11,6 @@ module.exports.start = () => {
         logger.info(`Server running on port ${port} in ${environment} mode...`);
     });
 
-    // Handling errors during server startup
     app.on("error", (error) => {
         logger.error("Server failed to start:", error);
     });

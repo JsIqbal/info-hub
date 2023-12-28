@@ -4,7 +4,7 @@ const path = require("path");
 const { getLogger } = require(path.join(process.cwd(), "src/config"));
 const sequelize = require(path.join(
     process.cwd(),
-    "/src/config/lib/sequelize.js"
+    "src/config/lib/sequelize.js"
 ));
 const UserSearch = require(path.join(
     process.cwd(),

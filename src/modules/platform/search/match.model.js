@@ -3,12 +3,12 @@ const { DataTypes } = require("sequelize");
 
 const sequelize = require(path.join(
     process.cwd(),
-    "/src/config/lib/sequelize.js"
+    "src/config/lib/sequelize.js"
 ));
 
 const UserSearch = require(path.join(
     process.cwd(),
-    "/src/modules/platform/search/search.model"
+    "src/modules/platform/search/search.model"
 ));
 
 const Match = sequelize.define("Match", {

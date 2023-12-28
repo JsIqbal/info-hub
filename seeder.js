@@ -63,7 +63,6 @@ async function init() {
     } catch (error) {
         logger.error("Error seeding database:", error);
     } finally {
-        // Close the connection after seeding
         await sequelize.close();
         logger.info("Database connection closed.");
     }
@@ -76,5 +75,5 @@ init()
     })
     .catch((err) => {
         console.error(err);
-        process.exit(1); // Exit with an error code
+        process.exit(1);
     });
