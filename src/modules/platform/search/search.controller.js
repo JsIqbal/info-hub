@@ -3,6 +3,8 @@ const path = require("path");
 
 const { getLogger } = require(path.join(process.cwd(), "src/config"));
 const sequelize = require(path.join(process.cwd(), "src/config/lib/sequelize"));
+const nodeCache = require(path.join(process.cwd(), "src/config/lib/nodecache"));
+
 const UserSearch = require(path.join(
     process.cwd(),
     "src/modules/platform/search/search.model"
@@ -14,9 +16,8 @@ const Match = require(path.join(
 
 // External API interaction and Keyword Search Logic
 const searchExternalAPI = async (keyword) => {
-    const externalApiResponse = await axios.get(
-        "https://jsonplaceholder.typicode.com/posts"
-    );
+    const EXTERNAL_API = nodeCache.getValue("EXTERNAL_API");
+    const externalApiResponse = await axios.get(EXTERNAL_API);
     return externalApiResponse.data.filter(
         (post) => post.title.includes(keyword) || post.body.includes(keyword)
     );

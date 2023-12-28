@@ -1,5 +1,9 @@
 const path = require("path");
 const axios = require("axios");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 jest.mock("axios");
 
 const { searchExternalAPI } = require(path.join(
@@ -21,11 +25,11 @@ describe("searchExternalAPI", () => {
 
         axios.get.mockResolvedValue({ data: mockPosts });
 
+        const apiUrl = process.env.EXTERNAL_API;
+
         const result = await searchExternalAPI(keyword);
 
-        expect(axios.get).toHaveBeenCalledWith(
-            "https://jsonplaceholder.typicode.com/posts"
-        );
+        expect(axios.get).toHaveBeenCalledWith(apiUrl);
         expect(result).toEqual([mockPosts[0]]);
     });
 });
