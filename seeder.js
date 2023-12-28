@@ -102,7 +102,7 @@ async function init() {
         await seedDatabase();
         logger.info("DB seed completed");
     } catch (error) {
-        console.error(error);
+        logger.error("Error initializing seeder.js:", error);
         process.exit(1);
     }
 }
