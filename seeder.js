@@ -1,47 +1,66 @@
 const path = require("path");
 const axios = require("axios");
+const mysql = require("mysql2/promise");
 
 const nodeCache = require(path.join(process.cwd(), "src/config/lib/nodecache"));
+const config = require(path.join(process.cwd(), "src/config"));
 
-async function init() {
-    const config = require(path.join(process.cwd(), "src/config"));
-    await config.initEnvironmentVariables();
+const logger = config.getLogger();
 
+async function createDatabase() {
+    const DB_NAME = nodeCache.getValue("DB_NAME");
+    const DB_HOST = nodeCache.getValue("DB_HOST");
+    const DB_USER = nodeCache.getValue("DB_USER");
+    const DB_PASSWORD = nodeCache.getValue("DB_PASSWORD");
+
+    const connection = await mysql.createConnection({
+        host: DB_HOST,
+        user: DB_USER,
+        password: DB_PASSWORD,
+    });
+
+    try {
+        await connection.query(`CREATE DATABASE IF NOT EXISTS ${DB_NAME};`);
+        logger.info(`Database ${DB_NAME} created successfully.`);
+    } catch (error) {
+        logger.error("Error creating database:", error);
+    } finally {
+        await connection.end();
+        logger.info("Database connection closed.");
+    }
+}
+
+async function seedDatabase() {
     const sequelize = require(path.join(
         process.cwd(),
         "src/config/lib/sequelize"
     ));
-
-    const UserSearch = require(path.join(
-        process.cwd(),
-        "src/modules/platform/search/search.model"
-    ));
-    const Match = require(path.join(
-        process.cwd(),
-        "src/modules/platform/search/match.model"
-    ));
-
-    const logger = config.getLogger("Seeder");
+    const transaction = await sequelize.transaction();
 
     try {
-        // Create tables if they don't exist
-        await sequelize.sync();
+        const UserSearch = require(path.join(
+            process.cwd(),
+            "src/modules/platform/search/search.model"
+        ));
+        const Match = require(path.join(
+            process.cwd(),
+            "src/modules/platform/search/match.model"
+        ));
 
-        // Clear existing data
         await sequelize.sync({ force: true });
         logger.info("Cleared existing data.");
 
-        // Seed external API data
         const EXTERNAL_API = nodeCache.getValue("EXTERNAL_API");
         const externalApiResponse = await axios.get(EXTERNAL_API);
         const posts = externalApiResponse.data;
         logger.info("Fetched external API data.");
 
-        // Seed initial data
-        const userSearch = await UserSearch.create({
-            keyword: "mango",
-        });
-        logger.info("Seeded initial data.");
+        const userSearch = await UserSearch.create(
+            {
+                keyword: "mango",
+            },
+            { transaction }
+        );
 
         const matchingPosts = posts.filter(
             (post) =>
@@ -50,30 +69,42 @@ async function init() {
         );
 
         const matchPromises = matchingPosts.map((post) =>
-            Match.create({
-                postId: post.id,
-                userId: post.userId,
-                keyword: userSearch.keyword,
-                userSearchId: userSearch.id, // Set the association
-            })
+            Match.create(
+                {
+                    postId: post.id,
+                    userId: post.userId,
+                    keyword: userSearch.keyword,
+                    userSearchId: userSearch.id,
+                },
+                { transaction }
+            )
         );
 
         await Promise.all(matchPromises);
+
+        await transaction.commit();
+        logger.info("Transaction committed.");
         logger.info("Database seeded successfully.");
     } catch (error) {
+        await transaction.rollback();
         logger.error("Error seeding database:", error);
+        throw error;
     } finally {
         await sequelize.close();
         logger.info("Database connection closed.");
     }
 }
 
-init()
-    .then(() => {
-        console.info("DB seed completed");
-        process.exit();
-    })
-    .catch((err) => {
-        console.error(err);
+async function init() {
+    try {
+        await config.initEnvironmentVariables();
+        await createDatabase();
+        await seedDatabase();
+        logger.info("DB seed completed");
+    } catch (error) {
+        console.error(error);
         process.exit(1);
-    });
+    }
+}
+
+init();
