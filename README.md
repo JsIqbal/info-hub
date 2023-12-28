@@ -18,10 +18,6 @@ This project is a backend REST API designed to handle keyword searches on an ext
 
 The ShareTrip Backend API is a Node.js application built to handle user requests for keyword searches. Upon receiving a request, the API fetches data from an external API, performs keyword matching on the response, and stores the matching records in a database. The API then returns the search results to the user.
 
-### External API
-
--   URL: [https://jsonplaceholder.typicode.com/posts](https://jsonplaceholder.typicode.com/posts)
-
 ### Endpoint
 
 -   `/api/search?keyword=<user_keyword>`
